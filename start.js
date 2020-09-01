@@ -1,7 +1,6 @@
 const Discord = require("discord.js");
 const embeds = require("./embeds.js");
 const base64 = require("base-64");
-const CoreCuber = require("./database/CoreCuber.json");
 const client = new Discord.Client();
 var fs = require('fs');
 
@@ -17,7 +16,7 @@ function write(path, text){
 }
 
 function parseData(text) {
-	return JSON.parse(new Buffer(text, 'base64'));
+	return JSON.parse(base64.decode(text));
 }
 
 client.on("message", msg => {
@@ -29,17 +28,20 @@ client.on("message", msg => {
 		msg.channel.send(embeds.helpEmbed);
 	}
 	if (tokens[0] === ".log"){
-		var object = parseData(require("./database/" + tokens[1] + ".json").data);
-		var rank = "";
-		if(object.rank === "co"){
-			rank = "Co-Owner";
-		} else if (object.rank == "res"){
-			rank = "Resident";
-		} else if (object.rank == "guest"){
-			rank = "Guest";
+		try {
+			var object = parseData(require("./database/" + tokens[1] + ".json").data);
+			var rank = "";
+			if(object.rank === "co"){
+				rank = "Co-Owner";
+			} else if (object.rank == "res"){
+				rank = "Resident";
+			} else if (object.rank == "guest"){
+				rank = "Guest";
+			}
+			msg.channel.send(embeds.playerInfo(tokens[1], rank, object.usedskips, object.skipsleft, object.discord, object.giveaways));
+		} catch (e) {
+			write("./database/" + tokens[1] + ".json", '{\n\t"data": \"' + base64.encode('{"version":1,"rank":"guest","usedskips":"0","skipsleft":"3","discord":"unset","giveaways":["none"]}') + "\"" + "\n}");
 		}
-		msg.channel.send(embeds.playerInfo("CoreCuber", rank, object.usedskips, object.skipsleft, object.discord, object.giveaways));
-		msg.guild.member(msg.author).roles.add("721818071215374396");
 	}
 });
 
