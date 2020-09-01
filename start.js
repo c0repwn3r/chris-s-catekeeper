@@ -1,4 +1,6 @@
 const Discord = require("discord.js");
+const base64 = require("base-64");
+const CoreCuber = require("./database/CoreCuber.json");
 const client = new Discord.Client();
 var fs = require('fs');
 
@@ -11,6 +13,10 @@ function write(fileVar, path, text){
 	fs.writeFile("./" + path, text, (err) => {
 		if (err) return console.log(err);
 	});
+}
+
+function parseData(text) {
+	return JSON.parse(new Buffer(text, 'base64'));
 }
 
 client.on("message", msg => {
