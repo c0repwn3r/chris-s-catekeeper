@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const embeds = require("./embeds.js");
 const base64 = require("base-64");
 const CoreCuber = require("./database/CoreCuber.json");
 const client = new Discord.Client();
@@ -25,7 +26,7 @@ client.on("message", msg => {
         msg.reply("Hello! I'm Chris's Gatekeeper. Type .help for help!");
     }
     if (msg.content === ".help") {
-        msg.reply("Not coded yet lol");
+		msg.channel.send(embeds.helpEmbed);
     }
 });
 
