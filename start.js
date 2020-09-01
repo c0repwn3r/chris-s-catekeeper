@@ -1,17 +1,20 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
+var fs = require('fs');
 
-function read(fileVar, path){
-	fileVar = require(path);
+function read(path){
+	var contents = fs.readFileSync(path);
+	return contents;
 }
 
 function write(fileVar, path, text){
-	fileVar.writeFile(path, text, function (err) {
+	fs.writeFile("./" + path, text, (err) => {
 		if (err) return console.log(err);
 	});
 }
 
 client.on("message", msg => {
+	var file;
     if (msg.content === ".hello") {
         msg.reply("Hello! I'm Chris's Gatekeeper. Type .help for help!");
     }
