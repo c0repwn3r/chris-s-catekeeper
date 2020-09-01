@@ -10,7 +10,7 @@ function read(path){
 	return contents;
 }
 
-function write(fileVar, path, text){
+function write(path, text){
 	fs.writeFile("./" + path, text, (err) => {
 		if (err) return console.log(err);
 	});
@@ -21,13 +21,26 @@ function parseData(text) {
 }
 
 client.on("message", msg => {
-	var file;
+	var tokens = msg.content.split(" ");
     if (msg.content === ".hello") {
         msg.reply("Hello! I'm Chris's Gatekeeper. Type .help for help!");
     }
     if (msg.content === ".help") {
 		msg.channel.send(embeds.helpEmbed);
-    }
+	}
+	if (tokens[0] === ".log"){
+		var object = parseData(require("./database/" + tokens[1] + ".json").data);
+		var rank = "";
+		if(object.rank === "co"){
+			rank = "Co-Owner";
+		} else if (object.rank == "res"){
+			rank = "Resident";
+		} else if (object.rank == "guest"){
+			rank = "Guest";
+		}
+		msg.channel.send(embeds.playerInfo("CoreCuber", rank, object.usedskips, object.skipsleft, object.discord, object.giveaways));
+		msg.guild.member(msg.author).roles.add("721818071215374396");
+	}
 });
 
 client.on("ready", () => {
