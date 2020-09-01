@@ -19,6 +19,16 @@ function parseData(text) {
 	return JSON.parse(base64.decode(text));
 }
 
+function writeField(path, field, value){
+	var data = base64.decode(JSON.parse(read(path)).data);
+	var pattern = '"[a-zA-Z]+":"[a-zA-Z\[\]]+"'
+	var regex = new RegExp('ReGeX' + pattern + 'ReGeX', "g");
+	var index = data.search(regex);
+	console.log(index);
+}
+
+writeField("./database/CoreCuber.json", "discord", "")
+
 client.on("message", msg => {
 	var tokens = msg.content.split(" ");
     if (msg.content === ".hello") {
