@@ -54,11 +54,7 @@ client.on("message", msg => {
 	if (msg.content === ".help") {
 		msg.channel.send(embeds.helpEmbed);
 	}
-<<<<<<< HEAD
 	if (tokens[0] === ".reset") {
-=======
-	if (tokens[0] === ".log") {
->>>>>>> 8623f41830f71255384d7075cefd0b58c949a3b1
 		try {
 			var file = require("./database/" + tokens[1] + ".json");
 			Object.keys(require.cache).forEach(function (key) { delete require.cache[key] });
@@ -100,6 +96,7 @@ client.on("message", msg => {
 			var object = parseData(file.data);
 			var rank = "";
 			var color = "";
+			var prefix = "";
 			if(object.rank === "co"){
 				rank = "Co-Owner";
 				color = "#FFFF55";
@@ -113,24 +110,22 @@ client.on("message", msg => {
 				rank = "Owner";
 				color = "#AA0000";
 			}
-			msg.channel.send(embeds.playerInfo(tokens[1].toLowerCase(), rank, object.usedskips, object.skipsleft, object.discord, object.giveaways, color));
+			if (object.developer == 1) {
+				prefix += ":diamond_shape_with_a_dot_inside:";
+			}
+			if (object.moderator == 1) {
+				prefix += ":small_orange_diamond:";
+			}
+			msg.channel.send(embeds.playerInfo(prefix + " " + tokens[1].toLowerCase(), rank, object.usedskips, object.skipsleft, object.discord, object.giveaways, color));
 		} catch (e) {
-<<<<<<< HEAD
 			console.log(e);
-			write("./database/" + tokens[1].toLowerCase() + ".json", '{\n\t"data": \"' + base64.encode('{"version":3,"rank":"guest","usedskips":"0","skipsleft":"3","discord":"unset","giveaways":["none"],"developer":0,"moderator":0,"owner":0,"vip":0}') + "\"" + "\n}");
+			write("./database/" + tokens[1].toLowerCase() + ".json", '{\n\t"data": \"' + base64.encode('{"version":3,"rank":"guest","usedskips":"0","skipsleft":"3","discord":"unset","giveaways":["none"],"developer":0,"moderator":0,"owner":0,"vip":0,"badge":""}') + "\"" + "\n}");
 		}
 	}
 	if (tokens[0] === ".write"){
 		if (writeField("./database/" + tokens[1].toLowerCase() + ".json", tokens[2], tokens[3]) == null) msg.reply("That user doesn't exist");
-=======
-			write("./database/" + tokens[1] + ".json", '{\n\t"data": \"' + base64.encode('{"version":2,"rank":"guest","usedskips":"0","skipsleft":"3","discord":"unset","giveaways":["none"]}') + "\"" + "\n}");
-		}
 	}
-	if (tokens[0] === ".write") {
-		if (writeField("./database/" + tokens[1] + ".json", tokens[2], tokens[3]) == null) msg.reply("That user doesn't exist");
->>>>>>> 8623f41830f71255384d7075cefd0b58c949a3b1
-	}
-	if (tokens[0] === ".create") {
+	if (tokens[0] === ".set") {
 		emptyValues = ["guest", "0", "3", "unset", ["none"]]
 		for (i = 0; i > 1; i--) {
 			msg.channel.send(i)
@@ -145,6 +140,9 @@ client.on("message", msg => {
 		} catch (e) {
 			write("./database/" + tokens[1] + ".json", '{\n\t"data": \"' + base64.encode('{"version":2,"rank":"' + tokens[2] + '","usedskips":"' + tokens[3] + '","skipsleft":"' + tokens[4] + '","discord":"' + tokens[5] + '","giveaways":["none"]}') + "\"" + "\n}");
 		}
+	}
+	if (tokens[0] === ".modify"){
+		write("./database/" + tokens[1].toLowerCase() + ".json", '{\n\t"data":"' + base64.encode(tokens[1]) + '"}');
 	}
 });
 
