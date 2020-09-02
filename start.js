@@ -116,6 +116,9 @@ client.on("message", msg => {
 			if (object.moderator == 1) {
 				prefix += ":small_orange_diamond:";
 			}
+			if (object.owner == 1) {
+				prefix += ":infinity:";
+			}
 			msg.channel.send(embeds.playerInfo(prefix + " " + tokens[1].toLowerCase(), rank, object.usedskips, object.skipsleft, object.discord, object.giveaways, color));
 		} catch (e) {
 			console.log(e);
