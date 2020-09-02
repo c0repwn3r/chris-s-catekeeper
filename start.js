@@ -21,13 +21,17 @@ function parseData(text) {
 
 function writeField(path, field, value){
 	var data = base64.decode(JSON.parse(read(path)).data);
-	var pattern = '"[a-zA-Z]+":"[a-zA-Z\[\]]+"'
-	var regex = new RegExp('ReGeX' + pattern + 'ReGeX', "g");
-	var index = data.search(regex);
-	console.log(index);
+	console.log(data);
+	var pattern = '"' + field + '":"[a-zA-Z\\[\\]#0-9]+"'
+	var regex = new RegExp(pattern, "g");
+	var substr = data.match(regex);
+	var index = data.indexOf(substr[0]);
+	data = data.replace(substr+',', '');
+	data = data.slice(0, index) + '"' + field + '":"' + value + '",' + data.slice(index);
+	console.log(data);
+	var encoded = base64.encode(data);
+	write(path, '{\n\t"data":"' + encoded + '"\n}');
 }
-
-writeField("./database/CoreCuber.json", "discord", "")
 
 client.on("message", msg => {
 	var tokens = msg.content.split(" ");
