@@ -48,7 +48,7 @@ function playerModified(user, rank, skipsused, skipsleft, skipsadded) {
 }
 const helpEmbed = new Discord.MessageEmbed()
 .setTitle("Help")
-.setDescription("You need to have the **Co-Owner** role or higher to run these commands.\nIf a player is not in the database and you try to preform an action on them,\nthey will be added with the default info:\nRole: Guest\nSkips: 3\nDiscord: None\nGiveaways: None)
+.setDescription("You need to have the **Co-Owner** role or higher to run these commands.\nIf a player is not in the database and you try to preform an action on them,\nthey will be added with the default info:\nRole: Guest\nSkips: 3\nDiscord: None\nGiveaways: None")
 .setFooter("Written by core#8531 and GhostlyCoding#4665")
 .addField(".help", "Gets help", false)
 .addField(".log <player username>","Retrieves information about a player from a database.",false)
