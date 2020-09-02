@@ -54,9 +54,44 @@ client.on("message", msg => {
     if (msg.content === ".help") {
 		msg.channel.send(embeds.helpEmbed);
 	}
-	if (tokens[0] === ".log"){
+	if (tokens[0] === ".reset") {
 		try {
 			var file = require("./database/" + tokens[1] + ".json");
+			Object.keys(require.cache).forEach(function(key) { delete require.cache[key] });
+			var object = parseData(file.data);
+			msg.reply("WARNING! You are about to completley wipe **" + tokens[1] + "**'s data and rebuild the profile! Type .confirmdel " + tokens[1] + " to continue! WARNING!");
+		} catch (e) {
+			msg.reply("Cannot wipe user that does not exist!");
+			console.log(e);
+		}
+	}
+	if (tokens[0] === ".confirmdel") {
+		try {
+			var file = require("./database/" + tokens[1] + ".json");
+			Object.keys(require.cache).forEach(function(key) { delete require.cache[key] });
+			var object = parseData(file.data);
+			msg.reply("Please wait, wiping data");
+			write("./database/" + tokens[1] + ".json", '');
+			msg.reply("Wipe complete");
+			msg.reply("Deleting file");
+			msg.reply("File deleted");
+			msg.reply("Rebuilding with default data");
+			write("./database/" + tokens[1] + ".json", '{\n\t"data": \"' + base64.encode('{"version":3,"rank":"guest","usedskips":"0","skipsleft":"3","discord":"unset","giveaways":["none"],"developer":0,"moderator":0,"owner":0,"vip":0}') + "\"" + "\n}");
+			msg.reply("Reset complete.")
+		} catch (e) {
+			msg.reply("Cannot wipe user that does not exist!");
+			console.log(e);
+		}
+	}
+	if (tokens[0] === ".dgc"){
+		if (tokens[1] == null || tokens[2] == null || tokens[3] == null || tokens[4] == null) {
+			msg.reply("Usage: .dgc <username> <skipsused> <skipsleft> <rank> <isdev> <ismod> <isowner>");
+			return;
+		}
+	}
+	if (tokens[0] === ".log"){
+		try {
+			var file = require("./database/" + tokens[1].toLowerCase() + ".json");
 			Object.keys(require.cache).forEach(function(key) { delete require.cache[key] });
 			var object = parseData(file.data);
 			var rank = "";
@@ -74,13 +109,14 @@ client.on("message", msg => {
 				rank = "Owner";
 				color = "#AA0000";
 			}
-			msg.channel.send(embeds.playerInfo(tokens[1], rank, object.usedskips, object.skipsleft, object.discord, object.giveaways, color));
+			msg.channel.send(embeds.playerInfo(tokens[1].toLowerCase(), rank, object.usedskips, object.skipsleft, object.discord, object.giveaways, color));
 		} catch (e) {
-			write("./database/" + tokens[1] + ".json", '{\n\t"data": \"' + base64.encode('{"version":1,"rank":"guest","usedskips":"0","skipsleft":"3","discord":"unset","giveaways":["none"]}') + "\"" + "\n}");
+			console.log(e);
+			write("./database/" + tokens[1].toLowerCase() + ".json", '{\n\t"data": \"' + base64.encode('{"version":3,"rank":"guest","usedskips":"0","skipsleft":"3","discord":"unset","giveaways":["none"],"developer":0,"moderator":0,"owner":0,"vip":0}') + "\"" + "\n}");
 		}
 	}
 	if (tokens[0] === ".write"){
-		if (writeField("./database/" + tokens[1] + ".json", tokens[2], tokens[3]) == null) msg.reply("That user doesn't exist");
+		if (writeField("./database/" + tokens[1].toLowerCase() + ".json", tokens[2], tokens[3]) == null) msg.reply("That user doesn't exist");
 	}
 });
 
