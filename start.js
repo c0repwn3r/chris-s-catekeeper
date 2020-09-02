@@ -30,7 +30,7 @@ function writeField(path, field, value) {
 		return null;
 	}
 	console.log(data);
-	var pattern = '"' + field + '":"[a-zA-Z\\[\\]#0-9]+"'
+	var pattern = '"' + field + '":"?[a-zA-Z\\[\\]#0-9]+"?'
 	var regex = new RegExp(pattern, "g");
 	var substr = data.match(regex);
 	var index = data.indexOf(substr[0]);
