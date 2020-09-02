@@ -5,8 +5,12 @@ const client = new Discord.Client();
 var fs = require('fs');
 
 function read(path){
-	var contents = fs.readFileSync(path);
-	return contents;
+	try {
+		var contents = fs.readFileSync(path);
+		return contents;
+	} catch (e) {
+		return null;
+	}
 }
 
 function write(path, text){
@@ -20,17 +24,26 @@ function parseData(text) {
 }
 
 function writeField(path, field, value){
-	var data = base64.decode(JSON.parse(read(path)).data);
+	try {
+		var data = base64.decode(JSON.parse(read(path)).data);
+	} catch (e) {
+		return null;
+	}
 	console.log(data);
 	var pattern = '"' + field + '":"[a-zA-Z\\[\\]#0-9]+"'
 	var regex = new RegExp(pattern, "g");
 	var substr = data.match(regex);
 	var index = data.indexOf(substr[0]);
 	data = data.replace(substr+',', '');
-	data = data.slice(0, index) + '"' + field + '":"' + value + '",' + data.slice(index);
+	if(field == "giveaways"){
+		data = data.slice(0, index) + '"' + field + '":[' + value + '],' + data.slice(index);
+	} else {
+		data = data.slice(0, index) + '"' + field + '":"' + value + '",' + data.slice(index);
+	}
 	console.log(data);
 	var encoded = base64.encode(data);
 	write(path, '{\n\t"data":"' + encoded + '"\n}');
+	return 0;
 }
 
 client.on("message", msg => {
@@ -43,7 +56,9 @@ client.on("message", msg => {
 	}
 	if (tokens[0] === ".log"){
 		try {
-			var object = parseData(require("./database/" + tokens[1] + ".json").data);
+			var file = require("./database/" + tokens[1] + ".json");
+			Object.keys(require.cache).forEach(function(key) { delete require.cache[key] });
+			var object = parseData(file.data);
 			var rank = "";
 			if(object.rank === "co"){
 				rank = "Co-Owner";
@@ -56,6 +71,9 @@ client.on("message", msg => {
 		} catch (e) {
 			write("./database/" + tokens[1] + ".json", '{\n\t"data": \"' + base64.encode('{"version":1,"rank":"guest","usedskips":"0","skipsleft":"3","discord":"unset","giveaways":["none"]}') + "\"" + "\n}");
 		}
+	}
+	if (tokens[0] === ".write"){
+		if (writeField("./database/" + tokens[1] + ".json", tokens[2], tokens[3]) == null) msg.reply("That user doesn't exist");
 	}
 });
 
