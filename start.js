@@ -84,10 +84,8 @@ client.on("message", msg => {
 	}
 	if (tokens[0] === ".create") {
 		emptyValues = ["guest", "0", "3", "unset", ["none"]]
-		for (i = 0; i > 1; i--) {
-			msg.channel.send(i)
+		for (i = 6; i > 1; i--) {
 			if (!tokens[i]) {
-				msg.reply(i)
 				tokens[i] = emptyValues[i - 2];
 			}
 		}
@@ -95,7 +93,7 @@ client.on("message", msg => {
 			var file = require("./database/" + tokens[1] + ".json");
 			return msg.reply("That person already exists")
 		} catch (e) {
-			write("./database/" + tokens[1] + ".json", '{\n\t"data": \"' + base64.encode('{"version":2,"rank":"' + tokens[2] + '","usedskips":"' + tokens[3] + '","skipsleft":"' + tokens[4] + '","discord":"' + tokens[5] + '","giveaways":["none"]}') + "\"" + "\n}");
+			write("./database/" + tokens[1] + ".json", '{\n\t"data": \"' + base64.encode('{"version":2,"rank":"' + tokens[2] + '","usedskips":"' + tokens[3] + '","skipsleft":"' + tokens[4] + '","discord":"' + tokens[5] + '","giveaways":"' + tokens[6] + '"}') + "\"" + "\n}");
 		}
 	}
 });
