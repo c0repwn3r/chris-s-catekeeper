@@ -126,7 +126,10 @@ client.on("message", msg => {
 		}
 	}
 	if (tokens[0] === ".write"){
-		if (writeField("./database/" + tokens[1].toLowerCase() + ".json", tokens[2], tokens[3]) == null) msg.reply("That user doesn't exist");
+		if (tokens.length < 4) msg.reply("You need more arguments");
+		for(var i = 2; i < tokens.length; i+=2){
+			if (writeField("./database/" + tokens[1].toLowerCase() + ".json", tokens[i], tokens[i+1]) == null) msg.reply("That user doesn't exist");
+		}
 	}
 	if (tokens[0] === ".set") {
 		emptyValues = ["guest", "0", "3", "unset", ["none"]]
