@@ -4,7 +4,7 @@ const base64 = require("base-64");
 const client = new Discord.Client();
 var fs = require('fs');
 
-function read(path){
+function read(path) {
 	try {
 		var contents = fs.readFileSync(path);
 		return contents;
@@ -13,7 +13,7 @@ function read(path){
 	}
 }
 
-function write(path, text){
+function write(path, text) {
 	fs.writeFile("./" + path, text, (err) => {
 		if (err) return console.log(err);
 	});
@@ -23,7 +23,7 @@ function parseData(text) {
 	return JSON.parse(base64.decode(text));
 }
 
-function writeField(path, field, value){
+function writeField(path, field, value) {
 	try {
 		var data = base64.decode(JSON.parse(read(path)).data);
 	} catch (e) {
@@ -34,8 +34,8 @@ function writeField(path, field, value){
 	var regex = new RegExp(pattern, "g");
 	var substr = data.match(regex);
 	var index = data.indexOf(substr[0]);
-	data = data.replace(substr+',', '');
-	if(field == "giveaways"){
+	data = data.replace(substr + ',', '');
+	if (field == "giveaways") {
 		data = data.slice(0, index) + '"' + field + '":[' + value + '],' + data.slice(index);
 	} else {
 		data = data.slice(0, index) + '"' + field + '":"' + value + '",' + data.slice(index);
@@ -48,16 +48,20 @@ function writeField(path, field, value){
 
 client.on("message", msg => {
 	var tokens = msg.content.split(" ");
-    if (msg.content === ".hello") {
-        msg.reply("Hello! I'm Chris's Gatekeeper. Type .help for help!");
-    }
-    if (msg.content === ".help") {
+	if (msg.content === ".hello") {
+		msg.reply("Hello! I'm Chris's Gatekeeper. Type .help for help!");
+	}
+	if (msg.content === ".help") {
 		msg.channel.send(embeds.helpEmbed);
 	}
+<<<<<<< HEAD
 	if (tokens[0] === ".reset") {
+=======
+	if (tokens[0] === ".log") {
+>>>>>>> 8623f41830f71255384d7075cefd0b58c949a3b1
 		try {
 			var file = require("./database/" + tokens[1] + ".json");
-			Object.keys(require.cache).forEach(function(key) { delete require.cache[key] });
+			Object.keys(require.cache).forEach(function (key) { delete require.cache[key] });
 			var object = parseData(file.data);
 			msg.reply("WARNING! You are about to completley wipe **" + tokens[1] + "**'s data and rebuild the profile! Type .confirmdel " + tokens[1] + " to continue! WARNING!");
 		} catch (e) {
@@ -111,17 +115,41 @@ client.on("message", msg => {
 			}
 			msg.channel.send(embeds.playerInfo(tokens[1].toLowerCase(), rank, object.usedskips, object.skipsleft, object.discord, object.giveaways, color));
 		} catch (e) {
+<<<<<<< HEAD
 			console.log(e);
 			write("./database/" + tokens[1].toLowerCase() + ".json", '{\n\t"data": \"' + base64.encode('{"version":3,"rank":"guest","usedskips":"0","skipsleft":"3","discord":"unset","giveaways":["none"],"developer":0,"moderator":0,"owner":0,"vip":0}') + "\"" + "\n}");
 		}
 	}
 	if (tokens[0] === ".write"){
 		if (writeField("./database/" + tokens[1].toLowerCase() + ".json", tokens[2], tokens[3]) == null) msg.reply("That user doesn't exist");
+=======
+			write("./database/" + tokens[1] + ".json", '{\n\t"data": \"' + base64.encode('{"version":2,"rank":"guest","usedskips":"0","skipsleft":"3","discord":"unset","giveaways":["none"]}') + "\"" + "\n}");
+		}
+	}
+	if (tokens[0] === ".write") {
+		if (writeField("./database/" + tokens[1] + ".json", tokens[2], tokens[3]) == null) msg.reply("That user doesn't exist");
+>>>>>>> 8623f41830f71255384d7075cefd0b58c949a3b1
+	}
+	if (tokens[0] === ".create") {
+		emptyValues = ["guest", "0", "3", "unset", ["none"]]
+		for (i = 0; i > 1; i--) {
+			msg.channel.send(i)
+			if (!tokens[i]) {
+				msg.reply(i)
+				tokens[i] = emptyValues[i - 2];
+			}
+		}
+		try {
+			var file = require("./database/" + tokens[1] + ".json");
+			return msg.reply("That person already exists")
+		} catch (e) {
+			write("./database/" + tokens[1] + ".json", '{\n\t"data": \"' + base64.encode('{"version":2,"rank":"' + tokens[2] + '","usedskips":"' + tokens[3] + '","skipsleft":"' + tokens[4] + '","discord":"' + tokens[5] + '","giveaways":["none"]}') + "\"" + "\n}");
+		}
 	}
 });
 
 client.on("ready", () => {
-    console.log("Logged in");
+	console.log("Logged in");
 });
 
 client.login("NzUwNDE4NDgzMzcxNzA0NDAx.X06PrA.WkHCy1jbRKhMUDeYCiWixa3ElKg");
