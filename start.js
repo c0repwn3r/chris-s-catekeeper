@@ -60,14 +60,21 @@ client.on("message", msg => {
 			Object.keys(require.cache).forEach(function(key) { delete require.cache[key] });
 			var object = parseData(file.data);
 			var rank = "";
+			var color = "";
 			if(object.rank === "co"){
 				rank = "Co-Owner";
+				color = "#FFFF55";
 			} else if (object.rank == "res"){
 				rank = "Resident";
+				color = "#FFAA00";
 			} else if (object.rank == "guest"){
 				rank = "Guest";
+				color = "#AAAAAA";
+			} else if (object.rank == "owner"){
+				rank = "Owner";
+				color = "#AA0000";
 			}
-			msg.channel.send(embeds.playerInfo(tokens[1], rank, object.usedskips, object.skipsleft, object.discord, object.giveaways));
+			msg.channel.send(embeds.playerInfo(tokens[1], rank, object.usedskips, object.skipsleft, object.discord, object.giveaways, color));
 		} catch (e) {
 			write("./database/" + tokens[1] + ".json", '{\n\t"data": \"' + base64.encode('{"version":1,"rank":"guest","usedskips":"0","skipsleft":"3","discord":"unset","giveaways":["none"]}') + "\"" + "\n}");
 		}
