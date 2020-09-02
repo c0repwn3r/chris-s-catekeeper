@@ -12,22 +12,21 @@ function playerInfo(user, rank, skipsused, skipsleft, discord, giveaways, color)
     .addField("Won Giveaways:", giveaways, true);
     return embed;
 }
-function failedSkip(user, rank, skipsused, skipsleft) {
+function failedSkip(user, skipsused, skipsleft) {
     var embed = new Discord.MessageEmbed()
     .setTitle("Skip Failed")
     .setColor("#ff0000")
     .setFooter("Written by core#8531 and GhostlyCoding#4665")
-    .addField("Rank:", rank, true)
+    .setDescription(user + " has no remaning skips!")
     .addField("Skips Used:", skipsused, true)
     .addField("Skips Remaning:", skipsleft, true);
     return embed;
 }
-function skipSuccess(user, rank, skipsused, skipsleft) {
+function skipSuccess(user, skipsused, skipsleft) {
     var embed = new Discord.MessageEmbed()
     .setTitle("Skip Success")
-    .setColor("#ff0000")
+    .setColor("#00ff00")
     .setFooter("Written by core#8531 and GhostlyCoding#4665")
-    .addField("Rank:", rank, true)
     .addField("Skips Used:", skipsused, true)
     .addField("Skips Remaning:", skipsleft, true)
     .setDescription(user + " has used a skip!");

@@ -13,6 +13,8 @@ function read(path) {
 	}
 }
 
+
+
 function write(path, text) {
 	fs.writeFile("./" + path, text, (err) => {
 		if (err) return console.log(err);
@@ -22,6 +24,8 @@ function write(path, text) {
 function parseData(text) {
 	return JSON.parse(base64.decode(text));
 }
+
+
 
 function writeField(path, field, value) {
 	try {
@@ -147,6 +151,18 @@ client.on("message", msg => {
 	}
 	if (tokens[0] === ".modify"){
 		write("./database/" + tokens[1].toLowerCase() + ".json", '{\n\t"data":"' + base64.encode(tokens[1]) + '"}');
+	}
+	if (tokens[0] === ".skip") {
+		var file = require("./database/" + tokens[1] + ".json");
+		Object.keys(require.cache).forEach(function(key) { delete require.cache[key] });
+		var object = parseData(file.data);
+		if (object.skipsleft > 0) {
+			writeField("./database/" + tokens[1].toLowerCase() + ".json", "skipsleft", object.skipsleft - 1);
+			writeField("./database/" + tokens[1].toLowerCase() + ".json", "usedskips", object.skipsleft + 1);
+			msg.channel.send(embeds.skipSuccess(tokens[1], object.usedskips + 1, object.skipsleft - 1));
+		} else {
+			msg.channel.send(embeds.skipFailed(tokens[1], object.usedskips, object.skipsleft));
+		}
 	}
 });
 
