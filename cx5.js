@@ -44,7 +44,7 @@ function playerCommandParser(tokens, msg){
 }
 
 function parseCommand(msg) {
-    var tokens = msg.split(" ");
+    var tokens = msg.content.split(" ");
     switch (tokens[0]) {
         case ".help":
             c.emit("help", tokens, msg);
@@ -60,6 +60,15 @@ function parseCommand(msg) {
             break;
         case ".player":
             playerCommandParser(tokens, msg);
+            break;
+        case ".reset":
+            c.emit("reset", tokens, msg);
+            break;
+        case ".confirmdel":
+            c.emit("del", tokens, msg);
+            break;
+        case ".write":
+            c.emit("write", tokens, msg);
             break;
     }
 }
