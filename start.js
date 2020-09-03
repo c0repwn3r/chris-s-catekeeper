@@ -43,6 +43,8 @@ function writeField(path, field, value) {
 	data = data.replace(substr + ',', '');
 	if (field == "giveaways") {
 		data = data.slice(0, index) + '"' + field + '":[' + value + '],' + data.slice(index);
+	} else if (Number.isInteger(value)) {
+		data = data.slice(0, index) + '"' + field + '":' + value + ',' + data.slice(index);
 	} else {
 		data = data.slice(0, index) + '"' + field + '":"' + value + '",' + data.slice(index);
 	}
@@ -58,6 +60,7 @@ c.on("help", (tokens, msg) => {
 	console.log("Help");
 	msg.channel.send(embeds.helpEmbed);
 });
+
 c.on("log", (tokens, msg) => {
 	console.log("Log");
 	try {
@@ -103,8 +106,8 @@ c.on("skip", (tokens, msg) => {
 	Object.keys(require.cache).forEach(function(key) { delete require.cache[key] });
 	var object = parseData(file.data);
 	if (object.skipsleft > 0) {
-		writeField("./database/" + tokens[1].toLowerCase() + ".json", "skipsleft", object.skipsleft - 1);
-		writeField("./database/" + tokens[1].toLowerCase() + ".json", "usedskips", object.skipsleft + 1);
+		writeField("./database/" + tokens[1].toLowerCase() + ".json", "skipsleft", --object.skipsleft);
+		writeField("./database/" + tokens[1].toLowerCase() + ".json", "usedskips", ++object.usedskips);
 		msg.channel.send(embeds.skipSuccess(tokens[1], object.usedskips + 1, object.skipsleft - 1));
 	} else {
 		msg.channel.send(embeds.skipFailed(tokens[1], object.usedskips, object.skipsleft));
@@ -170,7 +173,11 @@ c.on("del", (tokens, msg) => {
 c.on("write", (tokens, msg) => {
 	if (tokens.length < 4) msg.reply("You need more arguments");
 	for(var i = 2; i < tokens.length; i+=2){
-		if (writeField("./database/" + tokens[1].toLowerCase() + ".json", tokens[i], tokens[i+1]) == null) msg.reply("That user doesn't exist");
+		if (!isNaN(tokens[i+1])){
+			if (writeField("./database/" + tokens[1].toLowerCase() + ".json", tokens[i], +tokens[i+1]) == null) msg.reply("That user doesn't exist");
+		} else {
+			if (writeField("./database/" + tokens[1].toLowerCase() + ".json", tokens[i], tokens[i+1]) == null) msg.reply("That user doesn't exist");
+		}	
 	}
 })
 
