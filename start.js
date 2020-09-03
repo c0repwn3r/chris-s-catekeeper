@@ -130,10 +130,14 @@ c.on("pskipset", (tokens, msg) => {
 
 c.on("pdiscordset", (tokens, msg) => {
 	console.log("Player discord set");
+	writeField("/database/" + tokens[1] + ".json", "discord", tokens[4]);
 });
 
 c.on("prankset", (tokens, msg) => {
 	console.log("Player rank set");
+	// Remove Co, Guest, and Res
+	// Then add the role
+	msg
 });
 
 c.on("reset", (tokens, msg) => {
