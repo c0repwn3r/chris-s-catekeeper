@@ -4,7 +4,11 @@ const base64 = require("base-64");
 const client = new Discord.Client();
 const command = require("./cx5.min.js");
 const c = command.c;
+const r = require("./r.min.js");
 var fs = require('fs');
+
+const core = "476905356723748867";
+const ghostly = "393543627227267073";
 
 function read(path) {
 	try {
@@ -121,14 +125,18 @@ c.on("hello", (tokens, msg) => {
 
 c.on("pskipadd", (tokens, msg) => {
 	console.log("Player skip add");
+	var file = require("./database/" + tokens[1] + ".json");
+	Object.keys(require.cache).forEach(function(key) { delete require.cache[key] });
+	var object = parseData(file.data);
+	writeField("./database/" + tokens[1].toLowerCase() + ".json", "skipsleft", ++object.skipsleft);
 });
 
 c.on("pskipremove", (tokens, msg) => {
 	console.log("Player skip remove");
-});
-
-c.on("pskipset", (tokens, msg) => {
-	console.log("Player skip set");
+	var file = require("./database/" + tokens[1] + ".json");
+	Object.keys(require.cache).forEach(function(key) { delete require.cache[key] });
+	var object = parseData(file.data);
+	writeField("./database/" + tokens[1].toLowerCase() + ".json", "skipsleft", --object.skipsleft);
 });
 
 c.on("pdiscordset", (tokens, msg) => {

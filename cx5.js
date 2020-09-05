@@ -31,7 +31,7 @@ function skipCommandParser(tokens, msg) {
 
 function playerCommandParser(tokens, msg){
     switch (tokens[2]) {
-        case "skip":
+        case "skips":
             skipCommandParser(tokens, msg);
             break;
         case "discord":
@@ -42,9 +42,9 @@ function playerCommandParser(tokens, msg){
             break;
     }
 }
-
 function parseCommand(msg) {
     var tokens = msg.content.split(" ");
+    console.log(msg.author.id);
     switch (tokens[0]) {
         case ".help":
             c.emit("help", tokens, msg);

@@ -54,7 +54,6 @@ const helpEmbed = new Discord.MessageEmbed()
 .addField(".skip <player>","Attempts to use a skip for a player. If they do not have enough skips, the command will return an error. If they do, they will have one skip removed and this action will be logged.",true)
 .addField(".player <player> skips add <amount>","Adds the amount specified to the player's Available Skips count.",false)
 .addField(".player <player> skips remove <amount>","Removes the amount specified from the player's Available Skips count.",false)
-.addField(".player <player> skips set <amount>","Sets the player's Avalible Skips count to the specified number.",false)
 .addField(".player <player> rank set <rank>","Updates a player's rank in the database and automatically updates their role in the Discord.",false)
 .addField(".player <player> discord set <discord ID with tag>","Updates a player's discord account information.",false);
 exports.helpEmbed = helpEmbed;
