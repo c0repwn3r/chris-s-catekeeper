@@ -1,0 +1,7 @@
+; Chris's Gatekeeper Obfuscation Mappings
+; Hand-Obfuscated by core#8531
+; Minified using uglifyjs
+; You may NOT share this information
+start.js -
+  const Discord = require("discord.js") -> const a = require("discord.js");
+  const client = new Discord.Client() -> const b = new a.Client();
