@@ -4,4 +4,48 @@
 ; You may NOT share this information
 start.js -
   const Discord = require("discord.js") -> const a = require("discord.js");
-  const client = new Discord.Client() -> const b = new a.Client();
+  const embeds = require("./embeds.min.js") -> const b = require("./b.js");
+  const base64 = require("base64") -> const c = require("base64");
+  const client = new Discord.Client() -> const d = new a.Client();
+  const command = require("./cx5.min.js") -> const e = require("./cx5.min.js");
+  const c = command.c -> const f = c.c;
+  const r = require("./r.min.js") -> const g = require("./r.min.js");
+  var fs = require("fs") -> var fs = require("fs");
+  const core = "476905356723748867" -> const h = "476905356723748867";
+  const ghostly = "393543627227267073" -> const i = "393543627227267073";
+  function read(path) -> function a(a);
+  function write(path, text) -> function b(a, b);
+  function parseData(text) -> function c(a);
+  function writeField(path, field, value) -> function d(a, b, c);
+  client.on("message", msg => {command.parseCommand(msg);}); -> d.on("message", a => {e.a(a);});
+  c.on("help", (tokens, msg) -> c.on("a", (a, b);
+  c.on("log", (tokens, msg) -> c.on("b", (a, b);
+  c.on("skip", (tokens, msg) -> c.on("c", (a, b);
+  c.on("hello", (tokens, msg) -> c.on("d", (a, b);
+  c.on("pskipadd", (tokens, msg) -> c.on("e", (a, b);
+  c.on("pskipremove", (tokens, msg) -> c.on("f", (a, b);
+  c.on("pdiscordset", (tokens, msg) -> c.on("g", (a, b);
+  c.on("prankset", (tokens, msg) -> c.on("h", (a, b);
+  c.on("reset", (tokens, msg) -> c.on("i", (a, b);
+  c.on("del", (tokens, msg) -> c.on("j", (a, b);
+  c.on("write", (tokens, msg) -> c.on("k", (a, b);
+  d.on("ready"
+  d.login(
+cx5.js -
+  const events = require("events") -> const a = require("events");
+  var c = new events.EventEmitter() -> var b = new a.EventEmitter();
+  function skipCommandParser(tokens, msg) -> function c(a, b)
+  function playerCommandParser(tokens, msg) -> function b(a, b)
+  function parseCommand(msg) -> function a(a)
+  c.emit("help", tokens, msg) -> c.emit("a", a, b);
+  c.emit("log", tokens, msg) -> c.emit("b", a, b);
+  c.emit("skip", tokens, msg) -> c.emit("c", a, b);
+  c.emit("hello", tokens, msg) -> c.emit("d", a, b);
+  playerCommandParser(tokens, msg) -> b(a, b);
+  c.emit("pskipadd", tokens, msg) -> c.emit("e", a, b);
+  c.emit("pskipremove", tokens, msg) -> c.emit("f", a, b);
+  c.emit("pdiscordset", tokens, msg) -> c.emit("g", a, b)
+  c.emit("prankset", tokens, msg) -> c.emit("h", a, b)
+  c.emit("reset", tokens, msg) > c.emit("i", a, b)
+  c.emit("del", tokens, msg) -> c.emit("j", a, b)
+  c.emit("write", tokens, msg) -> c.emit("k", a, b)
