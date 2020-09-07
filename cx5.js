@@ -1,20 +1,5 @@
 const events = require("events");
-
-/*
-EVENT ID's
-HELP
-LOG
-SKIP
-hello
-pskipadd
-pskipremove
-pskipset
-prankset
-pdiscordset
-*/
-
 var c = new events.EventEmitter();
-
 function skipCommandParser(tokens, msg) {
     switch (tokens[3]) {
         case "add":
@@ -28,7 +13,6 @@ function skipCommandParser(tokens, msg) {
             break;
     }
 }
-
 function playerCommandParser(tokens, msg){
     switch (tokens[2]) {
         case "skips":
@@ -70,8 +54,10 @@ function parseCommand(msg) {
         case ".write":
             c.emit("write", tokens, msg);
             break;
+        case ".dgar":
+            c.emit("dgar", tokens, msg);
+            break;
     }
 }
-
 exports.c = c;
 exports.parseCommand = parseCommand;

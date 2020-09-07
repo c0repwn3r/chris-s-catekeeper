@@ -8,7 +8,6 @@ function playerInfo(user, rank, skipsused, skipsleft, discord, giveaways, color)
     .addField("Rank:", rank, true)
     .addField("Skips Used:", skipsused, true)
     .addField("Skips Remaning:", skipsleft, true)
-    .addField("Discord:", discord, true)
     .addField("Won Giveaways:", giveaways, true);
     return embed;
 }
@@ -54,8 +53,7 @@ const helpEmbed = new Discord.MessageEmbed()
 .addField(".skip <player>","Attempts to use a skip for a player. If they do not have enough skips, the command will return an error. If they do, they will have one skip removed and this action will be logged.",true)
 .addField(".player <player> skips add <amount>","Adds the amount specified to the player's Available Skips count.",false)
 .addField(".player <player> skips remove <amount>","Removes the amount specified from the player's Available Skips count.",false)
-.addField(".player <player> rank set <rank>","Updates a player's rank in the database and automatically updates their role in the Discord.",false)
-.addField(".player <player> discord set <discord ID with tag>","Updates a player's discord account information.",false);
+.addField(".player <player> rank set <rank>","Updates a player's rank in the database and automatically updates their role in the Discord.",false);
 exports.helpEmbed = helpEmbed;
 exports.playerModified = playerModified;
 exports.skipFailed = failedSkip;
