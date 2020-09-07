@@ -4,7 +4,6 @@ const base64 = require("base-64");
 const client = new Discord.Client();
 const command = require("./cx5.min.js");
 const c = command.c;
-const r = require("./r.min.js");
 var fs = require('fs');
 
 const core = "476905356723748867";
