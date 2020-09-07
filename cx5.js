@@ -1,4 +1,5 @@
 const events = require("events");
+const fs = require("fs");
 var c = new events.EventEmitter();
 function skipCommandParser(tokens, msg) {
     switch (tokens[3]) {
@@ -43,7 +44,12 @@ function parseCommand(msg) {
             c.emit("hello", tokens, msg);
             break;
         case ".player":
-            playerCommandParser(tokens, msg);
+			try {
+				fs.readFileSync("./database/" + tokens[1] + ".json");
+				playerCommandParser(tokens, msg);
+			} catch (e) {
+				msg.reply("Provide a valid player.");
+			}
             break;
         case ".reset":
             c.emit("reset", tokens, msg);
