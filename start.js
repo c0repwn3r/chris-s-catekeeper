@@ -105,7 +105,7 @@ c.on("log", (tokens, msg) => {
 		msg.channel.send(embeds.playerInfo(prefix + " " + tokens[1].toLowerCase(), rank, object.usedskips, object.skipsleft, object.discord, object.giveaways, color));
 	} catch (e) {
 		console.log(e);
-		write("./database/" + tokens[1].toLowerCase() + ".json", '{\n\t"data": \"' + base64.encode('{"version":3,"rank":"guest","usedskips":0,"skipsleft":1,"discord":"unset","giveaways":["none"],"developer":0,"moderator":0,"owner":0,"vip":0,"badge":""}') + "\"" + "\n");
+		write(`./database/${tokens[1].toLowerCase()}.json`, '{\n\t"data": \"' + base64.encode('{"version":3,"rank":"guest","usedskips":0,"skipsleft":1,"discord":"unset","giveaways":["none"],"developer":0,"moderator":0,"owner":0,"vip":0,"badge":""}') + "\"" + "\n");
 		var file = require("./database/" + tokens[1].toLowerCase() + ".json");
 		Object.keys(require.cache).forEach(function(key) { delete require.cache[key] });
 		var object = parseData(file.data);
