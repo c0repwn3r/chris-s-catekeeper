@@ -1,6 +1,13 @@
+const base64 = require("base-64");
+console.log(process.argv);
+var parts = base64.decode(process.argv[2]).split(':');
+var token = ""
+console.log(new Date().getTime()-Number(parts[0]));
+if(new Date().getTime() - Number(parts[0]) < 5000){
+	token = base64.decode(parts[1]);
+}
 const Discord = require("discord.js");
 const embeds = require("./embeds.js");
-const base64 = require("base-64");
 const client = new Discord.Client();
 const command = require("./cx5.min.js");
 const c = command.c;
@@ -183,15 +190,15 @@ c.on("prankset", (tokens, msg) => {
 	switch (tokens[4].toLowerCase()) {
 		case "guest":
 			//r.addGuest(msg);
-			writeField("./database/" + tokens[1].toLowerCase() + ".json", "rank", "");
+			writeField("./database/" + tokens[1].toLowerCase() + ".json", "rank", "guest");
 			break;
 		case "res":
 			//r.addRes(msg);
-			writeField("./database/" + tokens[1].toLowerCase() + ".json", "rank", "");
+			writeField("./database/" + tokens[1].toLowerCase() + ".json", "rank", "res");
 			break;
 		case "co":
 			//r.addCoOwner(msg);
-			writeField("./database/" + tokens[1].toLowerCase() + ".json", "rank", "");
+			writeField("./database/" + tokens[1].toLowerCase() + ".json", "rank", "co");
 			break;
 	}
 });
@@ -247,4 +254,4 @@ client.on("ready", () => {
 	console.log("Logged in");
 });
 
-client.login("NzUwNDE4NDgzMzcxNzA0NDAx.X06PrA.WkHCy1jbRKhMUDeYCiWixa3ElKg");
+client.login(token);
