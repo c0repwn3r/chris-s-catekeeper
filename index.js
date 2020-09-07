@@ -27,7 +27,7 @@ const req = https.request(options, (res) => {
 		console.log(response);
 		var parts = base64.decode(response).split(':');
 		if(Number(parts[0])-new Date().getTime() < 5000){
-			const cmd = spawn(`node`, ['--unhandled-rejections=strict', 'start.js', response]);
+			const cmd = spawn(`node`, ['--unhandled-rejections=strict', 'start.min.js', response]);
 			cmd.stderr.on('data', (data) => {
 				console.error(`stderr: ${data}`);
 			});
