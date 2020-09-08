@@ -30,3 +30,6 @@ jobs:
     - run: npm run build --if-present
     - run: npm install
     - run: node index.min.js
+    - run: Building release
+    - run: zip cgk-production-public.zip cx5.min.js embeds.min.js helper.min.js guide.md index.min.js package.json start.min.js
+    - run: echo Build finished
