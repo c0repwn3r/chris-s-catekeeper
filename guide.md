@@ -49,3 +49,6 @@ The player command is the most confusing command of all of them.
 `.player <player> skips` lets you add to or remove from a player's **Avalible Skips** count, with the `add` or `remove` subcommands respectivley. The number you put after it is the amount that will be added/removed from the count.
 
 #### Reset
+Syntax: `.reset <player`
+
+Completley deletes all of a player's data. Requires confirmation. More than 3 resets an hour will alert Chris and the developer as well as ban you from the bot for 6 hours. Bot usage bans can only be removed by the developer.
