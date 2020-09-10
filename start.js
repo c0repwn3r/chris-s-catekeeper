@@ -9,7 +9,7 @@ if(new Date().getTime() - Number(parts[0]) < 5000){
 const Discord = require("discord.js");
 const embeds = require("./embeds.min.js");
 const client = new Discord.Client();
-const command = require("./cx5.min.js");
+const command = require("./cx5.js");
 const c = command.c;
 var fs = require('fs');
 

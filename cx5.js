@@ -29,13 +29,13 @@ function playerCommandParser(tokens, msg){
 }
 function parseCommand(msg) {
     var tokens = msg.content.split(" ");
-    console.log(msg.author.id);
-	if(msg.member){
+	if(msg.member != undefined){
 		var userRole = msg.member.roles.cache.get('721818071215374396');
+	} else {
+		return;
 	}
 	if(!userRole) userRole = msg.member.roles.cache.get('721818097031315566');
 	if(!userRole) return;
-	console.log(userRole.name);
 	if(userRole.id === '721818071215374396' || userRole.id === '721818097031315566') {
 		switch (tokens[0]) {
 			case ".help":
@@ -52,7 +52,7 @@ function parseCommand(msg) {
 				break;
 			case ".player":
 				try {
-					fs.readFileSync("./database/" + tokens[1] + ".json");
+					fs.readFileSync("./database/" + tokens[1].toLowerCase() + ".json");
 					playerCommandParser(tokens, msg);
 				} catch (e) {
 					msg.reply("Provide a valid player.");
