@@ -52,3 +52,44 @@ The player command is the most confusing command of all of them.
 Syntax: `.reset <player`
 
 Completley deletes all of a player's data. Requires confirmation. More than 3 resets an hour will alert Chris and the developer as well as ban you from the bot for 6 hours. Bot usage bans can only be removed by the developer.
+
+### Chapter 2. Three Scenarios
+Read the scenario and come up wuth an answer. Then, compare it to the correct one.
+
+A player wants to use a skip but does not go through the door. Do you run the skip command?
+<details>
+  <summary>Answer</summary>
+  no
+</details>
+
+A player argues with you when you tell them they have no remaning skips. What should be your response?
+<details>
+  <summary>Answer</summary>
+  We have a discord bot which keeps track of all skips. (or a variation of that)
+</details>
+
+A player hacks the discord bot and gains infiite skips. How do you take action?
+<details>
+  <summary>Answer</summary>
+  The correct solution in this case would be to notify core or ghostly and we will relay the information as needed as well as fix the bug. The player should also be muted in the discord for 10m.
+</details>
+
+### Chapter 3. QNA
+DM Core a question for it to be added here!
+
+#### Q: Who can use the bot?
+#### A: All co-owner's or higher.
+
+#### Q: HEEEEEEEEEEEEEEEELP!
+#### A: Read the entire guide.
+
+#### Q: How do I undo an accidental skip?
+#### A: Read:
+> the skip **cannot** easily be reversed, except by a developer.
+
+### Chapter 4. Conclusion
+Thank you for reading and thanks for being an awesome part of this community! Let Core or Ghostly know if you need any help or have a feature request!
+
+Happy modding!
+
+-core
