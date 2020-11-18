@@ -1,5 +1,5 @@
 # chris-s-catekeeper
-A custom discord bot for Chris's Community
+A custom discord bot for Sven's parkour
 
 ### Information
 This code is owned by core and GhostlyCoding. You may have free access to the production code, however the obfuscation mappings are NOT public, for security reasons. You may NOT attempt to reverse-engineer this code.
